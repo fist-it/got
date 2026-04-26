@@ -3,6 +3,7 @@ package object
 import (
 	"bytes"
 	"errors"
+	"fmt"
 	"strconv"
 )
 
@@ -28,7 +29,6 @@ func (t *TreeEntry) Serialize() []byte {
 func (t *TreeEntry) Type() string {
 	return "tree_entry"
 }
-
 
 func DeserializeTreeEntry(data []byte) (*TreeEntry, error) {
 	header := data[0:6]
@@ -59,11 +59,16 @@ func DeserializeTreeEntry(data []byte) (*TreeEntry, error) {
 }
 
 func (t *Tree) Serialize() []byte {
-	// result := []byte("tree ")
-	// TODO
-	return nil
-}
+	var entries []byte
+	for _, entry := range t.Entries {
+		entries = append(entries, []byte(entry.Mode)...)
+		entries = append(entries, ' ')
+		entries = append(entries, []byte(entry.Name)...)
+		entries = append(entries, 0)
+		entries = append(entries, entry.Hash[:]...)
+	}
+	header := fmt.Sprintf("tree %d\x00", len(entries))
+	result := append([]byte(header), entries...)
 
-func (t *Tree) Type() string {
-	return "tree"
+	return result
 }
