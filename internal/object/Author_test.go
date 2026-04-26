@@ -36,7 +36,7 @@ func TestAuthorStringNegativeTimezone(t *testing.T) {
 }
 
 func TestParseAuthor(t *testing.T) {
-	input := "author John Doe <john@example.com> 1714000000 +0200"
+	input := "John Doe <john@example.com> 1714000000 +0200"
 	a, err := ParseAuthor(input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -57,7 +57,7 @@ func TestParseAuthor(t *testing.T) {
 }
 
 func TestParseAuthorCommitter(t *testing.T) {
-	input := "committer Jane Smith <jane@example.com> 1714000000 -0500"
+	input := "Jane Smith <jane@example.com> 1714000000 -0500"
 	a, err := ParseAuthor(input)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -82,7 +82,7 @@ func TestParseAuthorRoundTrip(t *testing.T) {
 		Timestamp: time.Unix(1714000000, 0).In(loc),
 	}
 
-	str := "author " + original.String()
+	str := original.String()
 	parsed, err := ParseAuthor(str)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)

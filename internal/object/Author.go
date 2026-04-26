@@ -37,6 +37,8 @@ func (a *Author) String() string {
 	return fmt.Sprintf("%s <%s> %d %s", a.Name, a.Email, a.Timestamp.Unix(), tz)
 }
 
+// Parses a string in Author.String() result format
+// Expects the value part only, without keyword prefix (e.g. "John Doe <john@example.com> 1714000000 +0200")
 func ParseAuthor(str string) (*Author, error) {
 	var result Author
 
@@ -46,11 +48,7 @@ func ParseAuthor(str string) (*Author, error) {
 		return nil, errors.New("Error parsing author string - missing email brackets")
 	}
 
-	spaceIdx := strings.IndexByte(str, ' ')
-	if spaceIdx == -1 {
-		return nil, errors.New("Error parsing author string - missing header")
-	}
-	result.Name = strings.TrimSpace(str[spaceIdx+1 : ltIdx-1])
+	result.Name = strings.TrimSpace(str[:ltIdx])
 
 	result.Email = str[ltIdx+1:gtIdx]
 
