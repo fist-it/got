@@ -65,6 +65,9 @@ func main() {
 			os.Exit(1)
 		}
 		os.Stdout.Write(data)
+	default:
+		fmt.Fprintf(os.Stderr, "unknown command: %s\n", os.Args[1])
+		os.Exit(1)
 
 	}
 }
