@@ -65,6 +65,15 @@ func main() {
 			os.Exit(1)
 		}
 		os.Stdout.Write(data)
+	case "add":
+		if len(os.Args) < 3 {
+			fmt.Fprintln(os.Stderr, "usage: got add <file|dir>")
+			os.Exit(1)
+		}
+		if err := porcelain.Add(os.Args[2]); err != nil {
+			fmt.Fprintf(os.Stderr, "error: %s\n", err)
+			os.Exit(1)
+		}
 	default:
 		fmt.Fprintf(os.Stderr, "unknown command: %s\n", os.Args[1])
 		os.Exit(1)
