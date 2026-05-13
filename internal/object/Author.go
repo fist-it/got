@@ -50,7 +50,7 @@ func ParseAuthor(str string) (*Author, error) {
 
 	result.Name = strings.TrimSpace(str[:ltIdx])
 
-	result.Email = str[ltIdx+1:gtIdx]
+	result.Email = str[ltIdx+1 : gtIdx]
 
 	rest := strings.TrimSpace(str[gtIdx+1:])
 	parts := strings.Split(rest, " ")
